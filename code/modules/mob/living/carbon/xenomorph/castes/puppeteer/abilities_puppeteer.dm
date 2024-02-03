@@ -490,7 +490,7 @@
 	name = "Give Order to Attack"
 	desc = "Give your puppets order to attack"
 	keybinding_signals = list(
-		KEYBINDING_NORMAL = COMSIG_XENOABILITY_ATTACKORDER
+		KEYBINDING_NORMAL = COMSIG_XENOABILITY_ATTACKORDER,
 	)
 
 /datum/action/ability/xeno_action/puppeteer_attack_order/action_activate(mob/living/victim)
@@ -511,7 +511,7 @@
 	name = "Give Order to Recall"
 	desc = "Give your puppets order to recall"
 	keybinding_signals = list(
-		KEYBINDING_NORMAL = COMSIG_XENOABILITY_RECALLORDER
+		KEYBINDING_NORMAL = COMSIG_XENOABILITY_RECALLORDER,
 	)
 
 /datum/action/ability/xeno_action/puppeteer_recall_order/action_activate(mob/living/victim)
