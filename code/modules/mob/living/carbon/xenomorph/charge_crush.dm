@@ -38,7 +38,7 @@
 	///If this charge should keep momentum on dir change and if it can charge diagonally
 	var/agile_charge = FALSE
 	/// Whether this ability should be activated when given.
-	var/should_start_on = TRUE
+	var/should_start_on = FALSE
 
 
 /datum/action/ability/xeno_action/ready_charge/give_action(mob/living/L)
@@ -72,8 +72,6 @@
 	RegisterSignal(charger, COMSIG_MOVABLE_MOVED, PROC_REF(update_charging))
 	RegisterSignal(charger, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
 	set_toggle(TRUE)
-	if(verbose)
-		to_chat(charger, span_xenonotice("We will charge when moving, now."))
 
 
 /datum/action/ability/xeno_action/ready_charge/proc/charge_off(verbose = TRUE)
@@ -81,8 +79,6 @@
 	if(charger.is_charging != CHARGE_OFF)
 		do_stop_momentum()
 	UnregisterSignal(charger, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_DIR_CHANGE))
-	if(verbose)
-		to_chat(charger, span_xenonotice("We will no longer charge when moving."))
 	set_toggle(FALSE)
 	valid_steps_taken = 0
 	charge_ability_on = FALSE
@@ -145,9 +141,6 @@
 
 /datum/action/ability/xeno_action/ready_charge/proc/do_stop_momentum(message = TRUE)
 	var/mob/living/carbon/xenomorph/charger = owner
-	if(message && valid_steps_taken >= steps_for_charge) //Message now happens without a stun condition
-		charger.visible_message(span_danger("[charger] skids to a halt!"),
-		span_xenowarning("We skid to a halt."), null, 5)
 	valid_steps_taken = 0
 	next_move_limit = 0
 	lastturf = null
@@ -339,12 +332,15 @@
 /datum/action/ability/xeno_action/ready_charge/bull_charge
 	action_icon_state = "bull_ready_charge"
 	charge_type = CHARGE_BULL
-	speed_per_step = 0.15
-	steps_for_charge = 5
-	max_steps_buildup = 10
+	speed_per_step = 1
+	steps_for_charge = 1
+	max_steps_buildup = 1
 	crush_living_damage = 15
-	plasma_use_multiplier = 2
+	plasma_use_multiplier = 8
 
+
+/datum/action/ability/xeno_action/ready_charge/bull_charge/should_show()
+	return FALSE
 
 /datum/action/ability/xeno_action/ready_charge/bull_charge/give_action(mob/living/L)
 	. = ..()
@@ -561,7 +557,7 @@
 		if(CHARGE_CRUSH)
 			Paralyze(CHARGE_SPEED(charge_datum) * 2 SECONDS)
 		if(CHARGE_BULL_HEADBUTT)
-			Paralyze(CHARGE_SPEED(charge_datum) * 2.5 SECONDS)
+			Paralyze(CHARGE_SPEED(charge_datum) * 3.5 SECONDS)
 
 	if(anchored)
 		charge_datum.do_stop_momentum(FALSE)
