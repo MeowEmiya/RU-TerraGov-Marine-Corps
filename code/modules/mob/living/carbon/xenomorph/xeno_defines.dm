@@ -372,6 +372,8 @@
 	///Will the mob charge when moving ? You need the charge verb to change this
 	var/is_charging = CHARGE_OFF
 
+	var/bull_charge_damage_modifier = 0.8
+
 	//Pounce vars
 	var/usedPounce = 0
 
