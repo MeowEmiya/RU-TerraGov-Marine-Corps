@@ -335,8 +335,8 @@
 	speed_per_step = 1
 	steps_for_charge = 1
 	max_steps_buildup = 1
-	crush_living_damage = 15
-	plasma_use_multiplier = 8
+	crush_living_damage = 25
+	plasma_use_multiplier = 12
 
 
 /datum/action/ability/xeno_action/ready_charge/bull_charge/should_show()
