@@ -37,6 +37,7 @@
 		charge.valid_steps_taken = charge.max_steps_buildup - 1
 		charge.charge_dir = aimdir
 		X.emote("roar")
+		X.stop_pulling()
 	for(var/i=0 to get_dist(X, A))
 		if(i % 2)
 			playsound(X, "alien_footstep_large", 50)
