@@ -33,7 +33,6 @@
 	if(charge)
 		charge.charge_on(FALSE)
 		charge.do_stop_momentum(FALSE)
-		charge.do_start_crushing()
 		charge.valid_steps_taken = charge.max_steps_buildup - 1
 		charge.charge_dir = aimdir
 		X.emote("roar")
