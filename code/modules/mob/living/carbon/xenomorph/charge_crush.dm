@@ -38,7 +38,7 @@
 	///If this charge should keep momentum on dir change and if it can charge diagonally
 	var/agile_charge = FALSE
 	/// Whether this ability should be activated when given.
-	var/should_start_on = FALSE
+	var/should_start_on = TRUE
 
 
 /datum/action/ability/xeno_action/ready_charge/give_action(mob/living/L)
@@ -331,12 +331,16 @@
 
 /datum/action/ability/xeno_action/ready_charge/bull_charge
 	action_icon_state = "bull_ready_charge"
+	keybinding_signals = list(
+		KEYBINDING_NORMAL = COMSIG_XENOABILITY_TOGGLE_BULL_CHARGE,
+	)
 	charge_type = CHARGE_BULL
 	speed_per_step = 1
 	steps_for_charge = 1
 	max_steps_buildup = 1
 	crush_living_damage = 35
 	plasma_use_multiplier = 12
+	should_start_on = FALSE
 
 
 /datum/action/ability/xeno_action/ready_charge/bull_charge/should_show()

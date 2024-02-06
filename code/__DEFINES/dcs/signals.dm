@@ -810,6 +810,7 @@
 #define COMSIG_XENOABILITY_BULLCHARGE "xenoability_bullcharge"
 #define COMSIG_XENOABILITY_BULLHEADBUTT "xenoability_bullheadbutt"
 #define COMSIG_XENOABILITY_BULLGORE "xenoability_bullgore"
+#define COMSIG_XENOABILITY_TOGGLE_BULL_CHARGE "xenoability_toggle_bull_charge"
 
 #define COMSIG_XENOABILITY_TAIL_SWEEP "xenoability_tail_sweep"
 #define COMSIG_XENOABILITY_FORWARD_CHARGE "xenoability_forward_charge"

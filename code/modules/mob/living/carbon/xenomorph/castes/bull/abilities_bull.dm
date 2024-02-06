@@ -5,7 +5,7 @@
 /datum/action/ability/activable/xeno/bull_charge
 	name = "Plow Charge"
 	action_icon_state = "bull_charge"
-	desc = "The plow charge is similar to the crusher charge, as it deals damage and throws anyone hit out of your way. Hitting a host does not stop or slow you down."
+	desc = "The plow charge is dealing damage and throws anyone hit out of your way."
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_BULLCHARGE,
 	)
@@ -32,7 +32,6 @@
 	var/mob/living/carbon/xenomorph/xeno = owner
 	if(charge)
 		charge.charge_on(FALSE)
-		charge.do_stop_momentum(FALSE)
 		charge.valid_steps_taken = charge.max_steps_buildup - 1
 		charge.charge_dir = aimdir
 		X.emote("roar")
@@ -43,7 +42,7 @@
 			new /obj/effect/temp_visual/xenomorph/afterimage(get_turf(X), X)
 		X.Move(get_step(X, aimdir), aimdir)
 		aimdir = get_dir(X,A)
-	charge.charge_off(TRUE)
+	charge.charge_off(FALSE)
 	succeed_activate()
 	add_cooldown()
 	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob, update_icons)), 0.5 SECONDS)
@@ -63,7 +62,7 @@
 /datum/action/ability/activable/xeno/bull_charge/gore
 	name = "Gore Charge"
 	action_icon_state = "bull_gore"
-	desc = "The gore charge, when it hits a host, stops your charge while dealing a large amount of damage where you are targeting dependant on your charge speed."
+	desc = "The gore charge, when it hits a host, stops your charge while dealing a large amount of damage where you are targeting."
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_BULLGORE,
 	)
