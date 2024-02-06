@@ -21,7 +21,7 @@
 	X.face_atom(A)
 	X.set_canmove(FALSE)
 	owner.icon_state = "[X.xeno_caste.caste_name][X.is_a_rouny ? " rouny" : ""] Charging"
-	if(!do_after(X, 5, NONE, X, BUSY_ICON_DANGER))
+	if(!do_after(X, 3, NONE, X, BUSY_ICON_DANGER))
 		if(!X.stat)
 			X.set_canmove(TRUE)
 		return fail_activate()
