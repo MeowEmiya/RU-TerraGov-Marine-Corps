@@ -130,7 +130,7 @@
 	keybind_signal = COMSIG_XENOABILITY_TRANSFER_PLASMA
 	hotkey_keys = list("N")
 
-	/datum/keybinding/xeno/toggle_charge
+/datum/keybinding/xeno/toggle_charge
 	name = "toggle_charge"
 	full_name = "Toggle Charge"
 	description = ""
