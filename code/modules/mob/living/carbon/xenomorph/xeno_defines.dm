@@ -405,6 +405,9 @@
 	/// The amount of Wrath currently stored.
 	var/wrath_stored = 0
 
+	// *** Bull vars *** //
+	var/acid_charge_damage = 10
+
 	//Notification spam controls
 	var/recent_notice = 0
 	var/notice_delay = 20 //2 second between notices

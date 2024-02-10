@@ -267,17 +267,17 @@
 	keybind_signal = COMSIG_XENOABILITY_BOMBARD
 	hotkey_keys = list("R")
 
-/datum/keybinding/xeno/plow_charge
-	name = "plow_charge"
+/datum/keybinding/xeno/acid_charge
+	name = "acid_charge"
 	full_name = "Bull: Plow Charge"
-	description = "A charge that plows through the victims."
-	keybind_signal = COMSIG_XENOABILITY_BULLCHARGE
+	description = "A charge that leaves acid puddles."
+	keybind_signal = COMSIG_XENOABILITY_ACIDCHARGE
 	hotkey_keys = list("Q")
 
 /datum/keybinding/xeno/headbutt_charge
 	name = "headbutt_charge"
 	full_name = "Bull: Headbutt Charge"
-	description = "A charge that tosses the victim forward or backwards, depending on intent."
+	description = "A charge that tosses the victim forward."
 	keybind_signal = COMSIG_XENOABILITY_BULLHEADBUTT
 	hotkey_keys = list("E")
 
@@ -288,6 +288,12 @@
 	keybind_signal = COMSIG_XENOABILITY_BULLGORE
 	hotkey_keys = list("R")
 
+/datum/keybinding/xeno/shattering_charge
+	name = "shattering_charge"
+	full_name = "Bull: Shattering Charge"
+	description = "A charge that breaks items in victim hands."
+	keybind_signal = COMSIG_XENOABILITY_BULLSHATTER
+	hotkey_keys = list("F")
 /datum/keybinding/xeno/throw_hugger
 	name = "throw_hugger"
 	full_name = "Carrier: Throw Hugger"

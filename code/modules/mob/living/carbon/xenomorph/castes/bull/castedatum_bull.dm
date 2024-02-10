@@ -40,7 +40,7 @@
 	caste_traits = null
 
 	// *** Defense *** //
-	soft_armor = list(MELEE = 40, BULLET = 50, LASER = 40, ENERGY = 40, BOMB = 0, BIO = 35, FIRE = 50, ACID = 35)
+	soft_armor = list(MELEE = 40, BULLET = 50, LASER = 40, ENERGY = 40, BOMB = 20, BIO = 35, FIRE = 50, ACID = 35)
 
 	// *** Minimap Icon *** //
 	minimap_icon = "bull"
@@ -49,10 +49,9 @@
 		/datum/action/ability/xeno_action/xeno_resting,
 		/datum/action/ability/xeno_action/watch_xeno,
 		/datum/action/ability/activable/xeno/psydrain,
-		/datum/action/ability/xeno_action/ready_charge/bull_charge,
-		/datum/action/ability/activable/xeno/bull_charge,
-		/datum/action/ability/activable/xeno/bull_charge/headbutt,
-		/datum/action/ability/activable/xeno/bull_charge/gore,
+		/datum/action/ability/activable/xeno/acid_charge,
+		/datum/action/ability/activable/xeno/headbutt,
+		/datum/action/ability/activable/xeno/gore,
 	)
 
 /datum/xeno_caste/bull/normal
@@ -63,3 +62,14 @@
 	caste_desc = "Bloodthirsty horned devil of the hive. Stay away from its path."
 	primordial_message = "We are the spearhead of the hive. Run them all down."
 	upgrade = XENO_UPGRADE_PRIMO
+
+	actions = list(
+		/datum/action/ability/xeno_action/xeno_resting,
+		/datum/action/ability/xeno_action/watch_xeno,
+		/datum/action/ability/activable/xeno/psydrain,
+		/datum/action/ability/activable/xeno/acid_charge,
+		/datum/action/ability/activable/xeno/headbutt,
+		/datum/action/ability/activable/xeno/gore,
+		/datum/action/ability/activable/xeno/shattering_charge,
+	)
+
