@@ -229,7 +229,7 @@
 	RegisterSignal(X, COMSIG_MOVABLE_MOVED, PROC_REF(afterimage))
 	X.icon_state = "[X.xeno_caste.caste_name][X.is_a_rouny ? " rouny" : ""] Charging"
 
-	succeed_activate()//
+	succeed_activate()
 	add_cooldown()
 
 /datum/action/ability/activable/xeno/shattering_charge/proc/bull_charge_slash(datum/source, mob/living/target, damage, list/damage_mod)
