@@ -151,7 +151,7 @@
 
 /datum/action/ability/activable/xeno/gore/use_ability()
 	var/mob/living/carbon/xenomorph/X = owner
-	if(!do_after(X, 5, NONE, X, BUSY_ICON_DANGER))
+	if(!do_after(X, 0.5 SECONDS, NONE, X, BUSY_ICON_DANGER))
 		if(!X.stat)
 			X.set_canmove(TRUE)
 		return fail_activate()
