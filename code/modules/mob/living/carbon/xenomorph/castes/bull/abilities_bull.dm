@@ -236,7 +236,7 @@
 	var/mob/living/carbon/xenomorph/X = owner
 	playsound(target,'sound/effects/metalhit.ogg', 75, 1)
 	broken_item = target.get_active_held_item()
-	qdel(broken_item)
+	broken_item.deconstruct(FALSE)
 	X.visible_message(span_danger("[X] shatter [target]'s [broken_item]!"),
 		span_xenowarning("We shatter [target]'s [broken_item] and skid to a halt!"))
 	shattering_charge_deactivate()
