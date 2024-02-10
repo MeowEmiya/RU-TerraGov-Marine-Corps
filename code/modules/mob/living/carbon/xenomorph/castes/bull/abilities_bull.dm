@@ -215,7 +215,7 @@
 
 /datum/action/ability/activable/xeno/shattering_charge/use_ability()
 	var/mob/living/carbon/xenomorph/X = owner
-	if(!do_after(X, 10, NONE, X, BUSY_ICON_DANGER))
+	if(!do_after(X, 1 SECONDS, NONE, X, BUSY_ICON_DANGER))
 		if(!X.stat)
 			X.set_canmove(TRUE)
 		return fail_activate()
