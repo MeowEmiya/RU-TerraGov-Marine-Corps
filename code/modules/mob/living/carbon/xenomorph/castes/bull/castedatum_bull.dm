@@ -70,6 +70,6 @@
 		/datum/action/ability/activable/xeno/acid_charge,
 		/datum/action/ability/activable/xeno/headbutt,
 		/datum/action/ability/activable/xeno/gore,
-		/datum/action/ability/activable/xeno/shattering_charge,
+		/datum/action/ability/xeno_action/tolerate
 	)
 

@@ -58,7 +58,7 @@
 	X.set_canmove(TRUE)
 	X.add_movespeed_modifier(MOVESPEED_ID_BULL_CHARGE, TRUE, 0, NONE, TRUE, X.xeno_caste.speed * 1.3)
 	charge_duration = addtimer(CALLBACK(src, PROC_REF(acid_charge_deactivate)), 3 SECONDS,  TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
-	RegisterSignals(X, list(COMSIG_MOB_CLICK_RIGHT, COMSIG_MOB_MIDDLE_CLICK), PROC_REF(acid_charge_deactivate))
+	RegisterSignals(X, list(COMSIG_LIVING_STATUS_PARALYZE, COMSIG_LIVING_STATUS_STAGGER), PROC_REF(acid_charge_deactivate))
 	RegisterSignal(X, COMSIG_MOVABLE_MOVED, PROC_REF(acid_puddle))
 	X.icon_state = "[X.xeno_caste.caste_name][X.is_a_rouny ? " rouny" : ""] Charging"
 
@@ -75,7 +75,9 @@
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_XENOMORPH_ATTACK_LIVING,
 		COMSIG_MOB_CLICK_RIGHT,
-		COMSIG_MOB_MIDDLE_CLICK,))
+		COMSIG_MOB_MIDDLE_CLICK,
+		COMSIG_LIVING_STATUS_PARALYZE,
+		COMSIG_LIVING_STATUS_STAGGER,))
 
 // ***************************************
 // *********** Headbutt Charge
@@ -99,10 +101,10 @@
 		return fail_activate()
 	X.emote("roar")
 	X.set_canmove(TRUE)
-	X.add_movespeed_modifier(MOVESPEED_ID_BULL_CHARGE, TRUE, 0, NONE, TRUE, X.xeno_caste.speed * 1.3)
+	X.add_movespeed_modifier(MOVESPEED_ID_BULL_CHARGE, TRUE, 0, NONE, TRUE, X.xeno_caste.speed * 1.2)
 	charge_duration = addtimer(CALLBACK(src, PROC_REF(headbutt_charge_deactivate)), 3 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
 	RegisterSignals(X, list(COMSIG_MOB_CLICK_RIGHT, COMSIG_MOB_MIDDLE_CLICK), PROC_REF(headbutt_charge_deactivate))
-	RegisterSignal(X, COMSIG_LIVING_STATUS_STAGGER, PROC_REF(headbutt_charge_deactivate))
+	RegisterSignals(X, list(COMSIG_LIVING_STATUS_PARALYZE, COMSIG_LIVING_STATUS_STAGGER), PROC_REF(headbutt_charge_deactivate))
 	RegisterSignal(X, COMSIG_XENOMORPH_ATTACK_LIVING, PROC_REF(bull_charge_slash))
 	RegisterSignal(X, COMSIG_MOVABLE_MOVED, PROC_REF(afterimage))
 	X.icon_state = "[X.xeno_caste.caste_name][X.is_a_rouny ? " rouny" : ""] Charging"
@@ -113,6 +115,9 @@
 /datum/action/ability/activable/xeno/headbutt/proc/bull_charge_slash(datum/source, mob/living/target, damage, list/damage_mod)
 	var/mob/living/carbon/xenomorph/X = owner
 	var/headbutt_throw_range = 6
+
+	if(target.stat == DEAD)
+		return
 
 	target.knockback(X, headbutt_throw_range, 1)
 	target.Paralyze(1 SECONDS)
@@ -133,6 +138,7 @@
 		COMSIG_XENOMORPH_ATTACK_LIVING,
 		COMSIG_MOB_CLICK_RIGHT,
 		COMSIG_MOB_MIDDLE_CLICK,
+		COMSIG_LIVING_STATUS_PARALYZE,
 		COMSIG_LIVING_STATUS_STAGGER,))
 
 // ***************************************
@@ -146,7 +152,7 @@
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_BULLGORE,
 	)
 	var/turf/last_turf
-	cooldown_duration = 5 SECONDS
+	cooldown_duration = 8 SECONDS
 	var/charge_duration
 
 /datum/action/ability/activable/xeno/gore/use_ability()
@@ -157,10 +163,10 @@
 		return fail_activate()
 	X.emote("roar")
 	X.set_canmove(TRUE)
-	X.add_movespeed_modifier(MOVESPEED_ID_BULL_CHARGE, TRUE, 0, NONE, TRUE, X.xeno_caste.speed * 1.3)
+	X.add_movespeed_modifier(MOVESPEED_ID_BULL_CHARGE, TRUE, 0, NONE, TRUE, X.xeno_caste.speed * 1.2)
 	charge_duration = addtimer(CALLBACK(src, PROC_REF(gore_charge_deactivate)), 2 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
 	RegisterSignals(X, list(COMSIG_MOB_CLICK_RIGHT, COMSIG_MOB_MIDDLE_CLICK), PROC_REF(gore_charge_deactivate))
-	RegisterSignal(X, COMSIG_LIVING_STATUS_STAGGER, PROC_REF(gore_charge_deactivate))
+	RegisterSignals(X, list(COMSIG_LIVING_STATUS_PARALYZE, COMSIG_LIVING_STATUS_STAGGER), PROC_REF(gore_charge_deactivate))
 	RegisterSignal(X, COMSIG_XENOMORPH_ATTACK_LIVING, PROC_REF(bull_charge_slash))
 	RegisterSignal(X, COMSIG_MOVABLE_MOVED, PROC_REF(afterimage))
 	X.icon_state = "[X.xeno_caste.caste_name][X.is_a_rouny ? " rouny" : ""] Charging"
@@ -170,7 +176,11 @@
 
 /datum/action/ability/activable/xeno/gore/proc/bull_charge_slash(datum/source, mob/living/target, damage, list/damage_mod)
 	var/mob/living/carbon/xenomorph/X = owner
-	damage = X.xeno_caste.melee_damage * X.xeno_melee_damage_modifier * 4
+
+	if(target.stat == DEAD)
+		return
+
+	damage = X.xeno_caste.melee_damage * X.xeno_melee_damage_modifier * 2.6
 	target.apply_damage(damage, BRUTE, X.zone_selected, MELEE)
 	playsound(target,'sound/weapons/alien_tail_attack.ogg', 75, 1)
 	target.emote_gored()
@@ -189,67 +199,42 @@
 		COMSIG_XENOMORPH_ATTACK_LIVING,
 		COMSIG_MOB_CLICK_RIGHT,
 		COMSIG_MOB_MIDDLE_CLICK,
+		COMSIG_LIVING_STATUS_PARALYZE,
 		COMSIG_LIVING_STATUS_STAGGER,))
 
 // ***************************************
-// *********** Shattering Charge
+// *********** Tolerate
 // ***************************************
 
-/datum/action/ability/activable/xeno/shattering_charge
-	name = "Shattering Charge"
+/datum/action/ability/xeno_action/tolerate
+	name = "Tolerate"
 	action_icon_state = "bull_ready_charge"
-	desc = "The shattering charge, when it hits a host, stops your charge while breaking up victim's item in hands."
+	desc = "For the next few seconds, you will become resistant to slowdown, stagger and stuns."
 	keybinding_signals = list(
-		KEYBINDING_NORMAL = COMSIG_XENOABILITY_BULLSHATTER,
+		KEYBINDING_NORMAL = COMSIG_XENOABILITY_TOLERATE,
 	)
-	var/turf/last_turf
-	cooldown_duration = 480 SECONDS
-	var/charge_duration
-	var/obj/item/broken_item = FALSE
-	var/should_cooldown_on_start = TRUE
+	cooldown_duration = 60 SECONDS
 
-/datum/action/ability/activable/xeno/shattering_charge/give_action(mob/living/X)
-	. = ..()
-	if(should_cooldown_on_start)
-		add_cooldown()
-
-/datum/action/ability/activable/xeno/shattering_charge/use_ability()
+/datum/action/ability/xeno_action/tolerate/action_activate()
 	var/mob/living/carbon/xenomorph/X = owner
-	if(!do_after(X, 1 SECONDS, NONE, X, BUSY_ICON_DANGER))
-		if(!X.stat)
-			X.set_canmove(TRUE)
-		return fail_activate()
-	X.emote("roar")
-	X.set_canmove(TRUE)
-	X.add_movespeed_modifier(MOVESPEED_ID_BULL_CHARGE, TRUE, 0, NONE, TRUE, X.xeno_caste.speed * 1.3)
-	charge_duration = addtimer(CALLBACK(src, PROC_REF(shattering_charge_deactivate)), 3 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
-	RegisterSignals(X, list(COMSIG_MOB_CLICK_RIGHT, COMSIG_MOB_MIDDLE_CLICK), PROC_REF(shattering_charge_deactivate))
-	RegisterSignal(X, COMSIG_XENOMORPH_ATTACK_LIVING, PROC_REF(bull_charge_slash))
-	RegisterSignal(X, COMSIG_LIVING_STATUS_STAGGER, PROC_REF(shattering_charge_deactivate))
-	RegisterSignal(X, COMSIG_MOVABLE_MOVED, PROC_REF(afterimage))
-	X.icon_state = "[X.xeno_caste.caste_name][X.is_a_rouny ? " rouny" : ""] Charging"
+
+	addtimer(CALLBACK(src, PROC_REF(tolerate_deactivate)), 20 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
+	X.set_stagger(0)
+	X.set_slowdown(0)
+	X.add_filter("bull_tolerate_outline", 4, outline_filter(1, COLOR_RED))
+	ADD_TRAIT(X, TRAIT_STAGGERIMMUNE, XENO_TRAIT)
+	ADD_TRAIT(X, TRAIT_SLOWDOWNIMMUNE, XENO_TRAIT)
+	ADD_TRAIT(X, TRAIT_STUNIMMUNE, XENO_TRAIT)
 
 	succeed_activate()
 	add_cooldown()
 
-/datum/action/ability/activable/xeno/shattering_charge/proc/bull_charge_slash(datum/source, mob/living/target, damage, list/damage_mod)
+/datum/action/ability/xeno_action/tolerate/proc/tolerate_deactivate()
 	var/mob/living/carbon/xenomorph/X = owner
-	playsound(target,'sound/effects/metalhit.ogg', 75, 1)
-	broken_item = target.get_active_held_item()
-	broken_item.deconstruct(FALSE)
-	X.visible_message(span_danger("[X] shatter [target]'s [broken_item]!"),
-		span_xenowarning("We shatter [target]'s [broken_item] and skid to a halt!"))
-	shattering_charge_deactivate()
-
-/datum/action/ability/activable/xeno/shattering_charge/proc/shattering_charge_deactivate()
-	SIGNAL_HANDLER
-	var/mob/living/carbon/xenomorph/X = owner
-	X.remove_movespeed_modifier(MOVESPEED_ID_BULL_CHARGE)
+	X.remove_filter("bull_tolerate_outline")
+	REMOVE_TRAIT(X, TRAIT_STAGGERIMMUNE, XENO_TRAIT)
+	REMOVE_TRAIT(X, TRAIT_SLOWDOWNIMMUNE, XENO_TRAIT)
+	REMOVE_TRAIT(X, TRAIT_STUNIMMUNE, XENO_TRAIT)
 	X.update_icons()
 
-	UnregisterSignal(owner, list(
-		COMSIG_MOVABLE_MOVED,
-		COMSIG_XENOMORPH_ATTACK_LIVING,
-		COMSIG_MOB_CLICK_RIGHT,
-		COMSIG_MOB_MIDDLE_CLICK,
-		COMSIG_LIVING_STATUS_STAGGER,))
+

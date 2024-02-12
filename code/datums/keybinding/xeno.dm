@@ -269,7 +269,7 @@
 
 /datum/keybinding/xeno/acid_charge
 	name = "acid_charge"
-	full_name = "Bull: Plow Charge"
+	full_name = "Bull: Acid charge"
 	description = "A charge that leaves acid puddles."
 	keybind_signal = COMSIG_XENOABILITY_ACIDCHARGE
 	hotkey_keys = list("Q")
@@ -288,11 +288,11 @@
 	keybind_signal = COMSIG_XENOABILITY_BULLGORE
 	hotkey_keys = list("R")
 
-/datum/keybinding/xeno/shattering_charge
-	name = "shattering_charge"
-	full_name = "Bull: Shattering Charge"
-	description = "A charge that breaks items in victim hands."
-	keybind_signal = COMSIG_XENOABILITY_BULLSHATTER
+/datum/keybinding/xeno/tolerate
+	name = "tolerate"
+	full_name = "Bull: Tolerate"
+	description = "Become resistant to slowdown, stagger and stuns"
+	keybind_signal = COMSIG_XENOABILITY_TOLERATE
 	hotkey_keys = list("F")
 /datum/keybinding/xeno/throw_hugger
 	name = "throw_hugger"
