@@ -49,9 +49,9 @@
 		/datum/action/ability/xeno_action/xeno_resting,
 		/datum/action/ability/xeno_action/watch_xeno,
 		/datum/action/ability/activable/xeno/psydrain,
-		/datum/action/ability/activable/xeno/acid_charge,
-		/datum/action/ability/activable/xeno/headbutt,
-		/datum/action/ability/activable/xeno/gore,
+		/datum/action/ability/xeno_action/acid_charge,
+		/datum/action/ability/xeno_action/headbutt,
+		/datum/action/ability/xeno_action/gore,
 	)
 
 /datum/xeno_caste/bull/normal
@@ -67,9 +67,9 @@
 		/datum/action/ability/xeno_action/xeno_resting,
 		/datum/action/ability/xeno_action/watch_xeno,
 		/datum/action/ability/activable/xeno/psydrain,
-		/datum/action/ability/activable/xeno/acid_charge,
-		/datum/action/ability/activable/xeno/headbutt,
-		/datum/action/ability/activable/xeno/gore,
+		/datum/action/ability/xeno_action/acid_charge,
+		/datum/action/ability/xeno_action/headbutt,
+		/datum/action/ability/xeno_action/gore,
 		/datum/action/ability/xeno_action/tolerate
 	)
 

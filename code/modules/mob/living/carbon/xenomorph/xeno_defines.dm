@@ -407,6 +407,7 @@
 
 	// *** Bull vars *** //
 	var/acid_charge_damage = 10
+	var/bull_charging = FALSE
 
 	//Notification spam controls
 	var/recent_notice = 0
