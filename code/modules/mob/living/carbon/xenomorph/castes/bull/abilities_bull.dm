@@ -2,7 +2,7 @@
 	SIGNAL_HANDLER
 	var/mob/living/carbon/xenomorph/X = owner
 	new/obj/effect/temp_visual/xenomorph/afterimage(get_turf(X), X)
-	new /obj/effect/xenomorph/spray(get_turf(X), 15 SECONDS, X.acid_charge_damage)
+	new /obj/effect/xenomorph/spray(get_turf(X), 5 SECONDS, X.acid_charge_damage)
 	for(var/obj/O in get_turf(X))
 		O.afterimage_act(X)
 		O.acid_spray_act(X)
@@ -27,6 +27,7 @@
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_ACIDCHARGE,
 	)
 	cooldown_duration = 30 SECONDS
+	ability_cost = 40
 	var/charge_duration
 	var/obj/effect/abstract/particle_holder/particle_holder
 
@@ -60,7 +61,7 @@
 	X.set_canmove(TRUE)
 	X.bull_charging = TRUE
 	X.add_movespeed_modifier(MOVESPEED_ID_BULL_CHARGE, TRUE, 0, NONE, TRUE, X.xeno_caste.speed * 1.2)
-	charge_duration = addtimer(CALLBACK(src, PROC_REF(acid_charge_deactivate)), 3 SECONDS,  TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
+	charge_duration = addtimer(CALLBACK(src, PROC_REF(acid_charge_deactivate)), 2 SECONDS,  TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
 	RegisterSignals(X, list(COMSIG_LIVING_STATUS_PARALYZE, COMSIG_LIVING_STATUS_STAGGER), PROC_REF(acid_charge_deactivate))
 	RegisterSignal(X, COMSIG_MOVABLE_MOVED, PROC_REF(acid_puddle))
 	X.icon_state = "[X.xeno_caste.caste_name][X.is_a_rouny ? " rouny" : ""] Charging"
@@ -93,6 +94,7 @@
 	)
 	var/turf/last_turf
 	cooldown_duration = 15 SECONDS
+	ability_cost = 40
 	var/charge_duration
 
 /datum/action/ability/xeno_action/headbutt/action_activate()
@@ -154,14 +156,15 @@
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_BULLGORE,
 	)
 	var/turf/last_turf
-	cooldown_duration = 8 SECONDS
+	cooldown_duration = 4 SECONDS
+	ability_cost = 40
 	var/charge_duration
 
 /datum/action/ability/xeno_action/gore/action_activate()
 	var/mob/living/carbon/xenomorph/X = owner
 	if(X.bull_charging == TRUE)
 		return
-	if(!do_after(X, 1 SECONDS, NONE, X, BUSY_ICON_DANGER))
+	if(!do_after(X, 0.5 SECONDS, NONE, X, BUSY_ICON_DANGER))
 		if(!X.stat)
 			X.set_canmove(TRUE)
 		return fail_activate()
@@ -213,10 +216,12 @@
 	name = "Tolerate"
 	action_icon_state = "bull_ready_charge"
 	desc = "For the next few seconds, you will become resistant to slowdown, stagger and stuns."
+	use_state_flags = ABILITY_USE_STAGGERED
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_TOLERATE,
 	)
 	cooldown_duration = 60 SECONDS
+	ability_cost = 40
 
 /datum/action/ability/xeno_action/tolerate/action_activate()
 	var/mob/living/carbon/xenomorph/X = owner

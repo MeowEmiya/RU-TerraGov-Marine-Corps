@@ -406,7 +406,7 @@
 	var/wrath_stored = 0
 
 	// *** Bull vars *** //
-	var/acid_charge_damage = 10
+	var/acid_charge_damage = 30
 	var/bull_charging = FALSE
 
 	//Notification spam controls
