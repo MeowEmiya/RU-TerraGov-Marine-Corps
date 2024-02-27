@@ -60,7 +60,7 @@
 	X.emote("hiss")
 	X.set_canmove(TRUE)
 	X.bull_charging = TRUE
-	X.add_movespeed_modifier(MOVESPEED_ID_BULL_CHARGE, TRUE, 0, NONE, TRUE, X.xeno_caste.speed * 1.2)
+	X.add_movespeed_modifier(MOVESPEED_ID_BULL_ACID_CHARGE, TRUE, 0, NONE, TRUE, X.xeno_caste.speed * 1.2)
 	charge_duration = addtimer(CALLBACK(src, PROC_REF(acid_charge_deactivate)), 2 SECONDS,  TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
 	RegisterSignals(X, list(COMSIG_LIVING_STATUS_PARALYZE, COMSIG_LIVING_STATUS_STAGGER), PROC_REF(acid_charge_deactivate))
 	RegisterSignal(X, COMSIG_MOVABLE_MOVED, PROC_REF(acid_puddle))
@@ -72,7 +72,7 @@
 /datum/action/ability/xeno_action/acid_charge/proc/acid_charge_deactivate()
 	SIGNAL_HANDLER
 	var/mob/living/carbon/xenomorph/X = owner
-	X.remove_movespeed_modifier(MOVESPEED_ID_BULL_CHARGE)
+	X.remove_movespeed_modifier(MOVESPEED_ID_BULL_ACID_CHARGE)
 	X.update_icons()
 	X.bull_charging = FALSE
 
@@ -108,7 +108,7 @@
 	X.emote("roar")
 	X.set_canmove(TRUE)
 	X.bull_charging = TRUE
-	X.add_movespeed_modifier(MOVESPEED_ID_BULL_CHARGE, TRUE, 0, NONE, TRUE, X.xeno_caste.speed * 1.2)
+	X.add_movespeed_modifier(MOVESPEED_ID_BULL_HEADBUTT_CHARGE, TRUE, 0, NONE, TRUE, X.xeno_caste.speed * 1.2)
 	charge_duration = addtimer(CALLBACK(src, PROC_REF(headbutt_charge_deactivate)), 3 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
 	RegisterSignals(X, list(COMSIG_LIVING_STATUS_PARALYZE, COMSIG_LIVING_STATUS_STAGGER), PROC_REF(headbutt_charge_deactivate))
 	RegisterSignal(X, COMSIG_XENOMORPH_ATTACK_LIVING, PROC_REF(bull_charge_slash))
@@ -135,7 +135,7 @@
 /datum/action/ability/xeno_action/headbutt/proc/headbutt_charge_deactivate()
 	SIGNAL_HANDLER
 	var/mob/living/carbon/xenomorph/X = owner
-	X.remove_movespeed_modifier(MOVESPEED_ID_BULL_CHARGE)
+	X.remove_movespeed_modifier(MOVESPEED_ID_BULL_HEADBUTT_CHARGE)
 	X.update_icons()
 	X.bull_charging = FALSE
 
@@ -171,7 +171,7 @@
 	X.emote("roar")
 	X.set_canmove(TRUE)
 	X.bull_charging = TRUE
-	X.add_movespeed_modifier(MOVESPEED_ID_BULL_CHARGE, TRUE, 0, NONE, TRUE, X.xeno_caste.speed * 1.2)
+	X.add_movespeed_modifier(MOVESPEED_ID_BULL_GORE_CHARGE, TRUE, 0, NONE, TRUE, X.xeno_caste.speed * 1.2)
 	charge_duration = addtimer(CALLBACK(src, PROC_REF(gore_charge_deactivate)), 2 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
 	RegisterSignals(X, list(COMSIG_LIVING_STATUS_PARALYZE, COMSIG_LIVING_STATUS_STAGGER), PROC_REF(gore_charge_deactivate))
 	RegisterSignal(X, COMSIG_XENOMORPH_ATTACK_LIVING, PROC_REF(bull_charge_slash))
@@ -198,7 +198,7 @@
 /datum/action/ability/xeno_action/gore/proc/gore_charge_deactivate()
 	SIGNAL_HANDLER
 	var/mob/living/carbon/xenomorph/X = owner
-	X.remove_movespeed_modifier(MOVESPEED_ID_BULL_CHARGE)
+	X.remove_movespeed_modifier(MOVESPEED_ID_BULL_GORE_CHARGE)
 	X.update_icons()
 	X.bull_charging = FALSE
 
