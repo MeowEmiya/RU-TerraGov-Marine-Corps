@@ -12,27 +12,14 @@
 /datum/action/ability/xeno_action/baneling_explode/action_activate()
 	. = ..()
 	var/mob/living/carbon/xenomorph/X = owner
-	handle_smoke(ability = TRUE)
-	X.record_tactical_unalive()
-	X.death(FALSE)
-
-/// This proc defines, and sets up and then lastly starts the smoke, if ability is false we divide range by 4.
-/datum/action/ability/xeno_action/baneling_explode/proc/handle_smoke(datum/source, ability = FALSE)
-	SIGNAL_HANDLER
-	var/mob/living/carbon/xenomorph/X = owner
-	if(X.plasma_stored <= 60)
-		return
 	var/turf/owner_T = get_turf(X)
 	var/datum/effect_system/smoke_spread/xeno/smoke
 	smoke = new /datum/effect_system/smoke_spread/xeno/acid
 	var/smoke_range = 5
-	/// Use up all plasma so that we dont smoke twice because we die.
-	X.use_plasma(X.plasma_stored)
-
 	smoke.set_up(smoke_range, owner_T, BANELING_SMOKE_DURATION)
 	playsound(owner_T, 'sound/effects/blobattack.ogg', 25)
 	smoke.start()
-
+	X.gib(FALSE)
 	X.record_war_crime()
 
 /datum/action/ability/xeno_action/baneling_explode/ai_should_start_consider()

@@ -8,6 +8,8 @@
 	upgrade = XENO_UPGRADE_BASETYPE
 	wound_type = "baneling" //used to match appropriate wound overlays
 
+	gib_flick = "baneling_gibbed"
+
 	// *** Melee Attacks *** //
 	melee_damage = 16
 	attack_delay = 6
@@ -15,12 +17,9 @@
 	// *** Speed *** //
 	speed = -1.6
 
-	// *** Plasma *** //
-	plasma_max = 275
-	plasma_gain = 11
-
 	// *** Health *** //
-	max_health = 240
+	max_health = 100
+	crit_health = 0
 
 
 	// *** Flags *** //
