@@ -284,104 +284,6 @@
 #undef REJUVENATE_MISCLICK_CD
 
 // ***************************************
-// *********** Psychic Link
-// ***************************************
-/datum/action/ability/activable/xeno/psychic_link
-	name = "Psychic Link"
-	action_icon_state = "psychic_link"
-	desc = "Link to a xenomorph and take some damage in their place. Unrest to cancel."
-	cooldown_duration = 50 SECONDS
-	ability_cost = 0
-	target_flags = ABILITY_MOB_TARGET
-	keybinding_signals = list(
-		KEYBINDING_NORMAL = COMSIG_XENOABILITY_PSYCHIC_LINK,
-	)
-	///Timer for activating the link
-	var/apply_psychic_link_timer
-	///Overlay applied on the target xeno while linking
-	var/datum/progressicon/target_overlay
-
-/datum/action/ability/activable/xeno/psychic_link/can_use_ability(atom/target, silent = FALSE, override_flags)
-	. = ..()
-	if(!.)
-		return
-	if(apply_psychic_link_timer)
-		if(!silent)
-			owner.balloon_alert(owner, "cancelled")
-		link_cleanup()
-		return FALSE
-	if(owner.do_actions)
-		return FALSE
-	if(!isxeno(target))
-		if(!silent)
-			to_chat(owner, span_notice("We can only link to familiar biological lifeforms."))
-		return FALSE
-	var/mob/living/carbon/xenomorph/owner_xeno = owner
-	if(owner_xeno.health <= owner_xeno.maxHealth * GORGER_PSYCHIC_LINK_MIN_HEALTH)
-		if(!silent)
-			to_chat(owner, span_notice("You are too hurt to link."))
-		return FALSE
-	if(!line_of_sight(owner, target, GORGER_PSYCHIC_LINK_RANGE))
-		if(!silent)
-			to_chat(owner, span_notice("It is beyond our reach, we must be close and our way must be clear."))
-		return FALSE
-	/*if(HAS_TRAIT(owner, TRAIT_PSY_LINKED)) //RUTGMC EDIT REMOVAL BEGIN
-		if(!silent)
-			to_chat(owner, span_notice("You are already linked to a xenomorph."))
-		return FALSE
-	if(HAS_TRAIT(target, TRAIT_PSY_LINKED))
-		if(!silent)
-			to_chat(owner, span_notice("[target] is already linked to a xenomorph."))
-		return FALSE*/ //RUTGMC EDIT REMOVAL END
-	return TRUE
-
-/datum/action/ability/activable/xeno/psychic_link/use_ability(atom/target)
-	apply_psychic_link_timer = addtimer(CALLBACK(src, PROC_REF(apply_psychic_link), target), GORGER_PSYCHIC_LINK_CHANNEL, TIMER_UNIQUE|TIMER_STOPPABLE)
-	target_overlay = new (target, BUSY_ICON_MEDICAL)
-	owner.balloon_alert(owner, "linking...")
-
-///Activates the link
-/datum/action/ability/activable/xeno/psychic_link/proc/apply_psychic_link(atom/target)
-	link_cleanup()
-	if(HAS_TRAIT(owner, TRAIT_PSY_LINKED) || HAS_TRAIT(target, TRAIT_PSY_LINKED))
-		return fail_activate()
-
-	var/mob/living/carbon/xenomorph/owner_xeno = owner
-	var/psychic_link = owner_xeno.apply_status_effect(STATUS_EFFECT_XENO_PSYCHIC_LINK, -1, target, GORGER_PSYCHIC_LINK_RANGE, GORGER_PSYCHIC_LINK_REDIRECT, owner_xeno.maxHealth * GORGER_PSYCHIC_LINK_MIN_HEALTH, TRUE)
-	RegisterSignal(psychic_link, COMSIG_XENO_PSYCHIC_LINK_REMOVED, PROC_REF(status_removed))
-	target.balloon_alert(owner_xeno, "link successul")
-	owner_xeno.balloon_alert(target, "linked to [owner_xeno]")
-	//RUTGMC EDIT REMOVAL BEGIN
-	/*if(!owner_xeno.resting)
-		owner_xeno.set_resting(TRUE, TRUE)
-	RegisterSignal(owner_xeno, COMSIG_XENOMORPH_UNREST, PROC_REF(cancel_psychic_link)) */
-	//RUTGMC EDIT REMOVAL END
-	succeed_activate()
-
-///Removes the status effect on unrest
-/datum/action/ability/activable/xeno/psychic_link/proc/cancel_psychic_link(datum/source)
-	//SIGNAL_HANDLER //RUTGMC EDIT REMOVAL
-	var/mob/living/carbon/xenomorph/owner_xeno = owner
-	owner_xeno.remove_status_effect(STATUS_EFFECT_XENO_PSYCHIC_LINK)
-
-///Cancels the status effect
-/datum/action/ability/activable/xeno/psychic_link/proc/status_removed(datum/source)
-	SIGNAL_HANDLER
-	UnregisterSignal(source, COMSIG_XENO_PSYCHIC_LINK_REMOVED)
-	//UnregisterSignal(owner, COMSIG_XENOMORPH_UNREST) //RUTGMC EDIT REMOVAL
-	add_cooldown()
-
-///Clears up things used for the linking
-/datum/action/ability/activable/xeno/psychic_link/proc/link_cleanup()
-	QDEL_NULL(target_overlay)
-	deltimer(apply_psychic_link_timer)
-	apply_psychic_link_timer = null
-
-
-/datum/action/ability/activable/xeno/psychic_link/ai_should_use(atom/target)
-	return FALSE
-
-// ***************************************
 // *********** Carnage
 // ***************************************
 /datum/action/ability/activable/xeno/carnage
@@ -468,3 +370,6 @@
 	return can_use_ability(target, TRUE)
 
 #undef FEAST_MISCLICK_CD
+
+/datum/action/ability/activable/xeno/recycle/gorger
+	ability_cost = 0

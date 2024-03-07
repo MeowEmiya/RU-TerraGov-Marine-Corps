@@ -38,21 +38,6 @@
 	return TRUE
 
 // ***************************************
-// *********** Psychic Link
-// ***************************************
-
-/datum/action/ability/activable/xeno/psychic_link
-	desc = "Link to a xenomorph and take some damage in their place."
-	cooldown_duration = 15 SECONDS
-
-/datum/action/ability/activable/xeno/psychic_link/use_ability(atom/target)
-	if(HAS_TRAIT(owner, TRAIT_PSY_LINKED))
-		to_chat(owner, span_notice("Cancelled link to [target]."))
-		cancel_psychic_link()
-		return
-	return ..()
-
-// ***************************************
 // *********** Feast
 // ***************************************
 /datum/action/ability/activable/xeno/feast
