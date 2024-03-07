@@ -212,13 +212,6 @@
 	return TRUE */
 //RUTGMC EDIT END
 
-///An extra check for the do_mob in can_use_ability. If the target isn't immobile and has lost health, the ability is cancelled. The ability is also cancelled if the target is knocked into crit DURING the do_mob.
-/datum/action/ability/activable/xeno/transfusion/proc/extra_health_check(mob/living/target)
-	if((target.health < target_health && !HAS_TRAIT(target, TRAIT_IMMOBILE)) || (target.InCritical() && target_health > target.get_crit_threshold()))
-		return FALSE
-	target_health = target.health
-	return TRUE
-
 /datum/action/ability/activable/xeno/transfusion/use_ability(atom/target)
 	var/mob/living/carbon/xenomorph/owner_xeno = owner
 	var/mob/living/carbon/xenomorph/target_xeno = target
