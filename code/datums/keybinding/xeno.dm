@@ -510,13 +510,6 @@
 	keybind_signal = COMSIG_XENOABILITY_REJUVENATE
 	hotkey_keys = list("R")
 
-/datum/keybinding/xeno/psychic_link
-	name = "psychic link"
-	full_name = "Gorger: Psychic Link"
-	description = "Link to a xenomorph and take some damage in their place. During this time, you can't move. Use rest action to cancel."
-	keybind_signal = COMSIG_XENOABILITY_PSYCHIC_LINK
-	hotkey_keys = list("Q")
-
 /datum/keybinding/xeno/carnage
 	name = "carnage"
 	full_name = "Gorger: Carnage"
