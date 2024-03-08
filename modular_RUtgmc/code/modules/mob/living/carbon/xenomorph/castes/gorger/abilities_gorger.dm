@@ -4,7 +4,7 @@
 
 /datum/action/ability/activable/xeno/drain/use_ability(mob/living/carbon/human/target_human)
 	. = ..()
-	target_human.blood_volume = max(target_human.blood_volume - 30, 0)
+	target_human.blood_volume = max(target_human.blood_volume - 60, 0)
 
 // ***************************************
 // *********** Transfusion
