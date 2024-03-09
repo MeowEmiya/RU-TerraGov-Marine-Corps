@@ -139,7 +139,7 @@ GLOBAL_LIST_INIT(acid_spray_hit, typecacheof(list(/obj/structure/barricade, /obj
 	var/range = 6
 
 /datum/action/ability/activable/xeno/dash/on_cooldown_finish()
-	to_chat(owner, span_xenodanger("Our exoskeleton quivers as we get ready to use Acid Dash again."))
+	to_chat(owner, span_xenodanger("Our exoskeleton quivers as we get ready to use Dash again."))
 	playsound(owner, "sound/effects/xeno_newlarva.ogg", 50, 0, 1)
 	return ..()
 
