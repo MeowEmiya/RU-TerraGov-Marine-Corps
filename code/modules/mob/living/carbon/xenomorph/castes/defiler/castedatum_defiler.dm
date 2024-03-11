@@ -11,7 +11,7 @@
 	wound_type = "defiler" //used to match appropriate wound overlays
 
 	// *** Melee Attacks *** //
-	melee_damage = 26
+	melee_damage = 23
 
 	// *** Speed *** //
 	speed = -1
