@@ -85,7 +85,7 @@
 		/datum/action/ability/activable/xeno/plant_weeds,
 		/datum/action/ability/activable/xeno/defile,
 		/datum/action/ability/xeno_action/lay_egg,
-		/datum/action/ability/activable/xeno/inject_egg_neurogas,
+		/datum/action/ability/xeno_action/lay_gas_egg,
 		/datum/action/ability/xeno_action/emit_neurogas,
 		/datum/action/ability/xeno_action/select_reagent,
 		/datum/action/ability/xeno_action/reagent_slash,
@@ -93,5 +93,4 @@
 		/datum/action/ability/xeno_action/pheromones/emit_recovery,
 		/datum/action/ability/xeno_action/pheromones/emit_warding,
 		/datum/action/ability/xeno_action/pheromones/emit_frenzy,
-		/datum/action/ability/activable/xeno/tentacle,
 	)

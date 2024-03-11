@@ -522,6 +522,7 @@
 // ***************************************
 // *********** Tentacle
 // ***************************************
+/*
 /datum/action/ability/activable/xeno/tentacle
 	name = "Tentacle"
 	action_icon_state = "tail_attack"
@@ -607,7 +608,58 @@
 	name = "You can't see this"
 	invisibility = INVISIBILITY_ABSTRACT
 
+*/
 #undef DEFILER_NEUROTOXIN
 #undef DEFILER_HEMODILE
 #undef DEFILER_TRANSVITOX
 #undef DEFILER_OZELOMELYN
+
+/datum/action/ability/xeno_action/lay_gas_egg
+	name = "Lay Gas Egg"
+	action_icon_state = "lay_gas_egg"
+	desc = "Create an egg that filled with chosen gas."
+	ability_cost = 100
+	cooldown_duration = 10 SECONDS
+	keybinding_signals = list(
+		KEYBINDING_NORMAL = COMSIG_XENOABILITY_LAY_GAS_EGG,
+	)
+
+/datum/action/ability/xeno_action/lay_gas_egg/action_activate(atom/A)
+	. = ..()
+	var/mob/living/carbon/xenomorph/defiler/X = owner
+	var/turf/current_turf = get_turf(X)
+
+	if(!current_turf.check_alien_construction(X))
+		return fail_activate()
+
+	if(!X.loc_weeds_type)
+		to_chat(X, span_xenowarning("Our eggs wouldn't grow well enough here. Lay them on resin."))
+		return fail_activate()
+
+	X.visible_message(span_xenonotice("[X] starts planting an egg."), \
+		span_xenonotice("We start planting an egg."), null, 5)
+
+	if(!do_after(owner, 1 SECONDS, NONE, current_turf, BUSY_ICON_BUILD, extra_checks = CALLBACK(current_turf, TYPE_PROC_REF(/turf, check_alien_construction), owner)))
+		return fail_activate()
+
+	var/obj/alien/egg/gas/gasegg = new(X.loc, X.hivenumber)
+	playsound(current_turf, 'sound/effects/splat.ogg', 15, 1)
+
+	switch(X.selected_reagent)
+		if(/datum/reagent/toxin/xeno_neurotoxin)
+			gasegg.gas_type = /datum/effect_system/smoke_spread/xeno/neuro/medium
+		if(/datum/reagent/toxin/xeno_ozelomelyn)
+			gasegg.gas_type = /datum/effect_system/smoke_spread/xeno/ozelomelyn
+		if(/datum/reagent/toxin/xeno_hemodile)
+			gasegg.gas_type = /datum/effect_system/smoke_spread/xeno/hemodile
+		if(/datum/reagent/toxin/xeno_transvitox)
+			gasegg.gas_type = /datum/effect_system/smoke_spread/xeno/transvitox
+		if(/datum/reagent/toxin/acid)
+			gasegg.gas_type = /datum/effect_system/smoke_spread/xeno/acid/light
+	gasegg.update_icon_state()
+
+	succeed_activate()
+	add_cooldown()
+
+	owner.record_traps_created()
+	X.record_war_crime()

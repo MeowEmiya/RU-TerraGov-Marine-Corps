@@ -441,12 +441,19 @@
 	keybind_signal = COMSIG_XENOABILITY_DEFILE
 	hotkey_keys = list("F")
 
-/datum/keybinding/xeno/tentacle
+/*/datum/keybinding/xeno/tentacle
 	name = "tentacle"
 	full_name = "Defiler: Tentacle"
 	description = "Allows the defiler to grab a tallhost or item from range and bring it towards the defiler."
 	keybind_signal = COMSIG_XENOABILITY_TENTACLE
 	hotkey_keys = list("Q")
+*/
+/datum/keybinding/xeno/lay_gas_egg
+	name = "lay_gas_egg"
+	full_name = "Defiler: Lay Gas Egg"
+	description = "Create an egg that filled with chosen gas"
+	keybind_signal = COMSIG_XENOABILITY_LAY_GAS_EGG
+	hotkey_keys = list("Z")
 
 /datum/keybinding/xeno/inject_egg_neurogas
 	name = "inject_egg_neurogas"

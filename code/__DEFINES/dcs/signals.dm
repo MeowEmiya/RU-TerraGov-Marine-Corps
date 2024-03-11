@@ -823,7 +823,8 @@
 #define COMSIG_XENOABILITY_RADIAL_SELECT_REAGENT "xenoability_radial_select_reagent"
 #define COMSIG_XENOABILITY_REAGENT_SLASH "xenoability_reagent_slash"
 #define COMSIG_XENOABILITY_DEFILE "xenoability_defile"
-#define COMSIG_XENOABILITY_TENTACLE "xenoability tentacle"
+//#define COMSIG_XENOABILITY_TENTACLE "xenoability tentacle"
+#define COMSIG_XENOABILITY_LAY_GAS_EGG "xenoability_lay_gas_egg"
 
 #define COMSIG_XENOABILITY_RESIN_WALKER "xenoability_resin_walker"
 #define COMSIG_XENOABILITY_BUILD_TUNNEL "xenoability_build_tunnel"
