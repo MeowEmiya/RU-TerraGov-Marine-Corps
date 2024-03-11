@@ -2,9 +2,8 @@
 	SIGNAL_HANDLER
 	var/mob/living/carbon/xenomorph/X = owner
 	new/obj/effect/temp_visual/xenomorph/afterimage(get_turf(X), X)
-	new /obj/effect/xenomorph/spray(get_turf(X), 5 SECONDS, X.acid_charge_damage)
+	new /obj/effect/xenomorph/spray(get_turf(X), 5 SECONDS, XENO_ACID_CHARGE_DAMAGE)
 	for(var/obj/O in get_turf(X))
-		O.afterimage_act(X)
 		O.acid_spray_act(X)
 		playsound(X, "alien_footstep_large", 50)
 
@@ -12,9 +11,7 @@
 	SIGNAL_HANDLER
 	var/mob/living/carbon/xenomorph/X = owner
 	new/obj/effect/temp_visual/xenomorph/afterimage(get_turf(X), X)
-	for(var/obj/O in get_turf(X))
-		O.afterimage_act(X)
-		playsound(X, "alien_footstep_large", 50)
+	playsound(X, "alien_footstep_large", 50)
 
 // ***************************************
 // *********** Acid Charge
@@ -42,10 +39,13 @@
 	rotation = -160
 	friction = 0.6
 
+/datum/action/ability/xeno_action/acid_charge/can_use_action()
+	var/mob/living/carbon/xenomorph/bull/X = owner
+	if(!X.bull_charging)
+		return ..()
+
 /datum/action/ability/xeno_action/acid_charge/action_activate()
 	var/mob/living/carbon/xenomorph/X = owner
-	if(X.bull_charging == TRUE)
-		return
 	if(!do_after(X, 1 SECONDS, NONE, X, BUSY_ICON_DANGER))
 		if(!X.stat)
 			X.set_canmove(TRUE)
@@ -78,7 +78,6 @@
 
 	UnregisterSignal(owner, list(
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_XENOMORPH_ATTACK_LIVING,
 		COMSIG_LIVING_STATUS_PARALYZE,
 		COMSIG_LIVING_STATUS_STAGGER,))
 
@@ -97,10 +96,13 @@
 	ability_cost = 40
 	var/charge_duration
 
+/datum/action/ability/xeno_action/headbutt/can_use_action()
+	var/mob/living/carbon/xenomorph/X = owner
+	if(!X.bull_charging)
+		return ..()
+
 /datum/action/ability/xeno_action/headbutt/action_activate()
 	var/mob/living/carbon/xenomorph/X = owner
-	if(X.bull_charging == TRUE)
-		return
 	if(!do_after(X, 1 SECONDS, NONE, X, BUSY_ICON_DANGER))
 		if(!X.stat)
 			X.set_canmove(TRUE)
@@ -160,10 +162,13 @@
 	ability_cost = 40
 	var/charge_duration
 
+/datum/action/ability/xeno_action/gore/can_use_action()
+	var/mob/living/carbon/xenomorph/X = owner
+	if(!X.bull_charging)
+		return ..()
+
 /datum/action/ability/xeno_action/gore/action_activate()
 	var/mob/living/carbon/xenomorph/X = owner
-	if(X.bull_charging == TRUE)
-		return
 	if(!do_after(X, 0.5 SECONDS, NONE, X, BUSY_ICON_DANGER))
 		if(!X.stat)
 			X.set_canmove(TRUE)
