@@ -41,8 +41,9 @@
 
 /datum/action/ability/xeno_action/acid_charge/can_use_action()
 	var/mob/living/carbon/xenomorph/bull/X = owner
-	if(!X.bull_charging)
-		return ..()
+	if(X.bull_charging)
+		return FALSE
+	return ..()
 
 /datum/action/ability/xeno_action/acid_charge/action_activate()
 	var/mob/living/carbon/xenomorph/X = owner
@@ -97,9 +98,10 @@
 	var/charge_duration
 
 /datum/action/ability/xeno_action/headbutt/can_use_action()
-	var/mob/living/carbon/xenomorph/X = owner
-	if(!X.bull_charging)
-		return ..()
+	var/mob/living/carbon/xenomorph/bull/X = owner
+	if(X.bull_charging)
+		return FALSE
+	return ..()
 
 /datum/action/ability/xeno_action/headbutt/action_activate()
 	var/mob/living/carbon/xenomorph/X = owner
@@ -163,9 +165,10 @@
 	var/charge_duration
 
 /datum/action/ability/xeno_action/gore/can_use_action()
-	var/mob/living/carbon/xenomorph/X = owner
-	if(!X.bull_charging)
-		return ..()
+	var/mob/living/carbon/xenomorph/bull/X = owner
+	if(X.bull_charging)
+		return FALSE
+	return ..()
 
 /datum/action/ability/xeno_action/gore/action_activate()
 	var/mob/living/carbon/xenomorph/X = owner
