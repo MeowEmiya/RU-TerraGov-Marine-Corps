@@ -494,7 +494,7 @@
 	overdose_threshold = 10000
 	scannable = TRUE
 	toxpwr = 0
-
+/*
 /datum/reagent/toxin/xeno_hemodile/on_mob_life(mob/living/L, metabolism)
 
 	var/slowdown_multiplier = 0.5 //Because hemodile is obviously in blood already
@@ -520,7 +520,7 @@
 
 /datum/reagent/toxin/xeno_hemodile/on_mob_delete(mob/living/L, metabolism)
 	L.remove_movespeed_modifier(MOVESPEED_ID_XENO_HEMODILE)
-
+*/
 
 /datum/reagent/toxin/xeno_transvitox //when damage is received, converts brute/burn equal to 50% of damage received to tox damage
 	name = "Transvitox"
