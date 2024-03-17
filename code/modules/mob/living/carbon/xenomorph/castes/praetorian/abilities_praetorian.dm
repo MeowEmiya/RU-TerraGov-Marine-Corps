@@ -126,7 +126,7 @@ GLOBAL_LIST_INIT(acid_spray_hit, typecacheof(list(/obj/structure/barricade, /obj
 // ***************************************
 // *********** Dash
 // ***************************************
-/datum/action/ability/activable/xeno/dash
+/datum/action/ability/activable/xeno/charge/dash
 	name = "Dash"
 	action_icon_state = "pounce"
 	desc = "Instantly dash to the selected tile."
@@ -135,18 +135,41 @@ GLOBAL_LIST_INIT(acid_spray_hit, typecacheof(list(/obj/structure/barricade, /obj
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_DASH,
 	)
-	///How far can we dash
-	var/range = 6
+	charge_range = PRAE_CHARGEDISTANCE
+	///Can we use the ability again
+	var/recast_available = FALSE
+	///Is this the recast
+	var/recast = FALSE
+	///The last tile we dashed through, used when swapping with a human
+	var/turf/last_turf
 
-/datum/action/ability/activable/xeno/dash/on_cooldown_finish()
-	to_chat(owner, span_xenodanger("Our exoskeleton quivers as we get ready to use Dash again."))
-	playsound(owner, "sound/effects/xeno_newlarva.ogg", 50, 0, 1)
-	return ..()
+/datum/action/ability/activable/xeno/charge/dash/use_ability(atom/A)
+	if(!A)
+		return
+	var/mob/living/carbon/xenomorph/xeno_owner = owner
+	RegisterSignal(xeno_owner, COMSIG_MOVABLE_POST_THROW, PROC_REF(charge_complete))
+	RegisterSignal(xeno_owner, COMSIG_XENOMORPH_LEAP_BUMP, PROC_REF(mob_hit))
 
-/datum/action/ability/activable/xeno/dash/use_ability(atom/A)
-
-	owner.pass_flags = PASS_LOW_STRUCTURE|PASS_DEFENSIVE_STRUCTURE|PASS_FIRE|PASS_MOB
-	owner.throw_at(A, range, 2, owner)
+	xeno_owner.xeno_flags |= XENO_LEAPING //This has to come before throw_at, which checks impact. So we don't do end-charge specials when thrown
 
 	add_cooldown()
 	succeed_activate()
+
+	last_turf = get_turf(owner)
+	owner.pass_flags = PASS_LOW_STRUCTURE|PASS_DEFENSIVE_STRUCTURE|PASS_FIRE
+	owner.throw_at(A, charge_range, 2, owner)
+
+	add_cooldown()
+	succeed_activate()
+
+/datum/action/ability/activable/xeno/charge/dash/mob_hit(datum/source, mob/living/living_target)
+	. = TRUE
+	if(living_target.stat || isxeno(living_target) || !(iscarbon(living_target))) //we leap past xenos
+		return
+	var/mob/living/carbon/carbon_victim = living_target
+	carbon_victim.ParalyzeNoChain(0.1 SECONDS)
+
+/datum/action/ability/activable/xeno/charge/dash/charge_complete()
+	. = ..()
+	var/mob/living/carbon/xenomorph/xeno_owner = owner
+	xeno_owner.pass_flags = initial(xeno_owner.pass_flags)
