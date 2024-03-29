@@ -58,7 +58,7 @@
 	START_PROCESSING(SSprocessing, src)
 	QDEL_NULL_IN(src, particle_holder, 5)
 	playsound(X,'sound/weapons/alien_bite1.ogg', 75, 1)
-	X.emote("hiss")
+	playsound(X,'sound/weapons/oink.ogg', 75, 1)
 	X.set_canmove(TRUE)
 	X.bull_charging = TRUE
 	X.add_movespeed_modifier(MOVESPEED_ID_BULL_ACID_CHARGE, TRUE, 0, NONE, TRUE, X.xeno_caste.speed * 1.2)
@@ -109,7 +109,7 @@
 		if(!X.stat)
 			X.set_canmove(TRUE)
 		return fail_activate()
-	X.emote("roar")
+	playsound(X,'sound/weapons/oink.ogg', 75, 1)
 	X.set_canmove(TRUE)
 	X.bull_charging = TRUE
 	X.add_movespeed_modifier(MOVESPEED_ID_BULL_HEADBUTT_CHARGE, TRUE, 0, NONE, TRUE, X.xeno_caste.speed * 1.2)
@@ -176,7 +176,7 @@
 		if(!X.stat)
 			X.set_canmove(TRUE)
 		return fail_activate()
-	X.emote("roar")
+	playsound(X,'sound/weapons/oink.ogg', 75, 1)
 	X.set_canmove(TRUE)
 	X.bull_charging = TRUE
 	X.add_movespeed_modifier(MOVESPEED_ID_BULL_GORE_CHARGE, TRUE, 0, NONE, TRUE, X.xeno_caste.speed * 1.2)
@@ -197,7 +197,7 @@
 
 	damage = X.xeno_caste.melee_damage * X.xeno_melee_damage_modifier * 2.6
 	target.apply_damage(damage, BRUTE, X.zone_selected, MELEE)
-	playsound(target,'sound/weapons/alien_tail_attack.ogg', 75, 1)
+	playsound(target,'sound/weapons/oink2.ogg', 75, 1)
 	target.emote_gored()
 	X.visible_message(span_danger("[X] gores [target]!"),
 		span_xenowarning("We gore [target] and skid to a halt!"))
